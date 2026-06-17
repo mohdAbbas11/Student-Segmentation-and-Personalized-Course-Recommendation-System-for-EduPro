@@ -856,12 +856,12 @@ elif page == "📊  Segment Analytics":
     centers = get_cluster_centers(labeled)
     centers.index = centers.index.map(seg_name)
     display_feats = [f for f in CLUSTER_FEATURES if f in centers.columns]
-    st.dataframe(
-        centers[display_feats].round(2).style.background_gradient(
-            cmap="RdPu", axis=0
-        ),
-        use_container_width=True,
-    )
+    styled = centers[display_feats].round(2).style.bar(
+        subset=display_feats,
+        color=["#2d1b69", "#6C63FF"],
+        axis=0,
+    ).format("{:.2f}")
+    st.dataframe(styled, use_container_width=True)
 
     # ── Top courses per cluster ────────────────────────────────────────
     st.markdown("<hr>", unsafe_allow_html=True)
